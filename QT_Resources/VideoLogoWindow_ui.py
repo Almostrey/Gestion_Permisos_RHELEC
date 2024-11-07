@@ -51,6 +51,6 @@ class Ui_Video_Logo_Window(object):
     # setupUi
 
     def retranslateUi(self, Video_Logo_Window):
-        Video_Logo_Window.setWindowTitle(QCoreApplication.translate("Video_Logo_Window", u"RHELEC", None))
+        Video_Logo_Window.setWindowTitle(QCoreApplication.translate("Video_Logo_Window", u"Abaxfem", None))
     # retranslateUi
 
