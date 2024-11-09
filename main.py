@@ -19,7 +19,7 @@ from openpyxl import load_workbook
 from docx import Document
 import msoffcrypto
 from io import BytesIO
-import xlsxwriter
+from pyperclip import copy
 # QT_Windows
 import QT_Windows
 import QT_Windows.WindowSelectEmail_ui
@@ -213,6 +213,11 @@ class WindowSolicitudPermisos(QtWidgets.QMainWindow, QT_Windows.WindowSolicitudP
         self.pbAgregarTecnico.clicked.connect(self.addPersonalTecnicoTable)
         self.pbEliminarTecnico.clicked.connect(self.eliminarPersonalTecnicoTable)
         self.pbEnviarFormatos.clicked.connect(self.enviarFormato)
+        self.pbCopyCorreos.clicked.connect(self.copyCorreos)
+        self.pbCopyOyMCorreo.clicked.connect(self.copyOyMCorreo)
+        self.pbCopyOyMTel.clicked.connect(self.copyOyMTel)
+        self.pbCopySupervisorCorreo.clicked.connect(self.copySupervisorCorreo)
+        self.pbCopySupervisorTel.clicked.connect(self.copySupervisorTel)
         # init Functions
         self.tablePermisosNecesarios.setGeometry(self.tablePermisosNecesarios.x(), self.tablePermisosNecesarios.x(), 639, 191)
         self.tableTecnicosCuadrilla.setGeometry(self.tableTecnicosCuadrilla.x(), self.tableTecnicosCuadrilla.x(), 639, 192)
@@ -220,6 +225,71 @@ class WindowSolicitudPermisos(QtWidgets.QMainWindow, QT_Windows.WindowSolicitudP
         self.loadRBS()
         self.loadcbPermisos()
         self.fixHeaderTables()
+    def copySupervisorCorreo(self):
+        with open("data/Supervisores.csv") as self.csvSupervisores:
+            self.InfoSupervisores = reader(self.csvSupervisores)
+            for self.row in self.InfoSupervisores:
+                if str(self.row[0]).split(";")[1] == self.cbSupervisores.currentText():
+                    copy(str(self.row[0]).split(";")[3])
+    def copySupervisorTel(self):
+        with open("data/Supervisores.csv") as self.csvSupervisores:
+            self.InfoSupervisores = reader(self.csvSupervisores)
+            for self.row in self.InfoSupervisores:
+                if str(self.row[0]).split(";")[1] == self.cbSupervisores.currentText():
+                    copy(str(self.row[0]).split(";")[2])
+    def copyCorreos(self):
+        if self.lineRegion.text() == "R1":
+            if self.getProvinciaCantonRBS()[1].upper() == "QUITO":
+                if self.lineZona.text() == "Z1":
+                    # R1Z1 UIO
+                    # tecomreddeaccesor1z1@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; Azambrano@claro.com.ec; ernesto.quimbita@rhelec.ec; daniel.guisha@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec;maritza.nunez@rhelec.ec
+                    pass
+                else:
+                    # R1Z2 UIO
+                    # tecoymrar1z2@claro.com.ec;  lgarcia@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; Azambrano@claro.com.ec; ernesto.quimbita@rhelec.ec; daniel.guisha@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec; maritza.nunez@rhelec.ec
+                    pass
+            else:
+                if self.lineZona.text() == "Z1":
+                    # R1Z1 Prov
+                    # tecomreddeaccesor1z1@claro.com.ec ; Azambrano@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; ernesto.quimbita@rhelec.ec; daniel.guisha@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec; maritza.nunez@rhelec.ec
+                    pass
+                else:
+                    # R1Z2 Prov
+                    # tecoymrar1z2@claro.com.ec;  lgarcia@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; Azambrano@claro.com.ec; ernesto.quimbita@rhelec.ec; daniel.guisha@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec; maritza.nunez@rhelec.ec
+                    pass
+        elif self.lineRegion.text() == "R2":
+            if self.getProvinciaCantonRBS()[1].upper() == "GUAYAQUIL" or self.getProvinciaCantonRBS()[1].upper() == "SANTA ELENA" or self.getProvinciaCantonRBS()[1].upper() == "LA TRONCAL":
+                if self.lineZona.text() == "Z1":
+                    # R2Z1 GYE
+                    # tecoymrar2z1@claro.com.ec; Azambrano@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; alexander.santander@rhelec.ec;  stalin.tutiven@rhelec.ec; christian.navas@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec;
+                    pass
+                else:
+                    # R2Z2 GYE
+                    # tecoymrar2z2@claro.com.ec; Azambrano@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; alexander.santander@rhelec.ec; stalin.tutiven@rhelec.ec; christian.navas@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec;
+                    pass
+            else:
+                if self.lineZona.text() == "Z1":
+                    # R2Z1 Prov
+                    # tecoymrar2z1@claro.com.ec; Azambrano@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; alexander.santander@rhelec.ec; stalin.tutiven@rhelec.ec; rodriguezlem@globalhitss.com;  christian.navas@rhelec.ec; mariajose.orozco@rhelec.ec;
+                    pass
+                else:
+                    # R2Z2 Prov
+                    # tecoymrar2z2@claro.com.ec; azambrano@claro.com.ec; nohemi.guadalupe@rhelec.ec; kevin.moreno@rhelec.ec; alexander.santander@rhelec.ec;  stalin.tutiven@rhelec.ec; christian.navas@rhelec.ec; rodriguezlem@globalhitss.com; mariajose.orozco@rhelec.ec;
+                    pass
+        else: pass
+        pass
+    def copyOyMCorreo(self):
+        with open("data/OyMs.csv") as self.csvOYMs:
+            self.InfoOYMs = reader(self.csvOYMs)
+            for self.row in self.InfoOYMs:
+                if str(self.row[0]).split(";")[1] == self.cbOyMs.currentText():
+                    copy(str(self.row[0]).split(";")[3])
+    def copyOyMTel(self):
+        with open("data/OyMs.csv") as self.csvOYMs:
+            self.InfoOYMs = reader(self.csvOYMs)
+            for self.row in self.InfoOYMs:
+                if str(self.row[0]).split(";")[1] == self.cbOyMs.currentText():
+                    copy(str(self.row[0]).split(";")[2])
     def updateOyMTable(self):
         try:
             i = len(self.infoCuadrilla["nombresTecnicos"])
@@ -968,8 +1038,10 @@ class WindowSolicitudPermisos(QtWidgets.QMainWindow, QT_Windows.WindowSolicitudP
                 df_new.to_excel(getcwd()+"/data/Registro Permisos.xlsx", index = False)
     def enviarFormato(self):
         self.verificationInformation()
-        try:self.deleteOutputFolder()
-        except:pass
+        if self.cbEliminarFormatos.isChecked():
+            try:self.deleteOutputFolder()
+            except:pass
+        else: pass
         self.permisos = {}
         self.tecnicos = []
         if self.error == []:
@@ -1065,10 +1137,11 @@ def deleteAllData():
     except: pass
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(argv)
     if isfile(getcwd()+"/ResourcesFolder/Logo_Rhelec/Logo_Rhelec.mp4"):
+        app = QtWidgets.QApplication(argv)
         window = Video_Logo_Window()
+        window.show()
+        app.exec()
     else:
-        window = WindowLogin()
-    window.show()
-    app.exec()
+        pass
+        #window = WindowLogin()
